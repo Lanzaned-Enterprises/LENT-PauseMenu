@@ -26,7 +26,20 @@ CreateThread(function()
 
     while true do
         Wait(0)
-        if IsPauseMenuActive() and LENT.Settings['UseCustomImage'] then SendNUIMessage({ display = true }) else SendNUIMessage({ display = false }) end
+        if IsPauseMenuActive() and LENT.Settings['UseCustomImage'] then
+            if (IsControlJustReleased(2, 202)) or (IsControlJustReleased(2, 177)) then
+                BigmapActive = false
+            elseif (IsControlJustReleased(2, 220)) or (IsControlJustReleased(2, 18)) then
+                BigmapActive = true
+            end
+            if BigmapActive then
+                SendNUIMessage({ display = "Bigmap", logo = "https://r2.fivemanage.com/1agQtY1XGRHK81qkmLTpG/images/image_2025-03-02_140800613.png" })
+            elseif not BigmapActive then
+                SendNUIMessage({ display = "Normalmap", logo = LENT.Settings['CustomImageLink'] })
+            end
+        else
+            SendNUIMessage({ display = false })
+        end
         if LocalPlayer.state.isLoggedIn then
             if LENT.Settings['UseMoneyNatives'] then
                 StatSetInt(`MP0_WALLET_BALANCE`, QBCore.Functions.GetPlayerData().money.cash, true)

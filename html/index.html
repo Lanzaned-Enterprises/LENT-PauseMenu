@@ -24,12 +24,21 @@
     </head>
     <body>
         <!-- Logo has to be 96x96 pixels just like the FiveM Logo -->
-        <img id="logo" src="logo.png"> 
+        <img id="logo" src=""> 
         <script type="text/javascript">
             window.addEventListener('message', function(event) {
                 var item = event.data;
                 var logo = document.getElementById('logo');
-                if (item.display === true) {
+                if (item.display === "Bigmap") {
+                    if (item.logo && item.logo.trim() !== "") { // Ensure logo URL is valid
+                        logo.src = item.logo; // Update the image source
+                    }
+                    logo.style.transition = 'opacity 0.1s ease-in-out';  // Faster fade out
+                    logo.style.opacity = 0;  // Fade out
+                } else if (item.display === "Normalmap") {
+                    if (item.logo && item.logo.trim() !== "") { // Ensure logo URL is valid
+                        logo.src = item.logo; // Update the image source
+                    }
                     logo.style.transition = 'opacity 0.5s ease-in-out';  // Slower fade in
                     logo.style.opacity = 1;  // Fade in
                 } else {
